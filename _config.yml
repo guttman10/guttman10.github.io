@@ -1,0 +1,5 @@
+title: My Personal Blog
+description: Welcome to my blog, where I share my thoughts and projects!
+baseurl: ""
+url: "https://guttman10.github.io"
+theme: minima
