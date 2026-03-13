@@ -152,401 +152,194 @@ Japan Trip Planner
 </div>
 
 
+<script src="./mapHandler.js"></script>
 <script>
 
-var map = L.map('map', {scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false}).setView([35.5,137],6);
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-attribution:'© OpenStreetMap'
-}).addTo(map);
-
-var currentLayer=null;
-var currentHotel=null;
-
-const hotels = {
-  tokyo1: [35.6895, 139.6917], // Tokyo Station
-  hakone: [35.2323, 139.1069], // Hakone
-  kyoto: [34.9854, 135.7587], // Kyoto Station
-  osaka: [34.7024, 135.4959], // Osaka Station
-  tokyo2: [35.6895, 139.6917] // Tokyo Station
-};
-
-
-const trip={
+const trip = {
 
 1:{
 date:"Jun 24",
 city:"Tokyo",
-coords:[[35.6762,139.6503],[35.6595,139.7005]],
-activities:["Shibuya Crossing", "Shibuya Sky"],
-text:`
-Arrival day
-
-• Airport → hotel
-• Get Suica / PASMO
-• Light rest
-
-Evening (easy first night):
-– Shibuya Crossing
-– Shibuya Sky sunset
-– Walk Center-gai
-
-Food idea:
-Ramen or conveyor sushi
-`
+hotel:[35.6812,139.7671],
+text:"Arrival in Tokyo. Easy first evening.",
+activities:[
+{ name:"Shibuya Crossing", loc:[35.6595,139.7005] },
+{ name:"Shibuya Sky", loc:[35.6580,139.7020] },
+{ name:"Center-gai Street", loc:[35.6602,139.7004] }
+]
 },
 
 2:{
 date:"Jun 25",
 city:"Tokyo",
-coords:[[35.6984,139.7730],[35.7289,139.7100]],
-activities:["Akihabara", "Ikebukuro"],
-text:`
-Anime + Otaku day
-
-Morning:
-Akihabara
-– Arcades
-– Gachapon
-– Mandarake
-– Super Potato
-
-Afternoon:
-Ikebukuro
-– Animate (largest anime store)
-– Sunshine City
-
-Tip:
-Keep luggage light — lots of browsing
-`
+hotel:[35.6812,139.7671],
+text:"Anime and gaming districts.",
+activities:[
+{ name:"Akihabara Electric Town", loc:[35.6984,139.7730] },
+{ name:"Gachapon Hall Akihabara", loc:[35.6990,139.7715] },
+{ name:"Mandarake Complex", loc:[35.6981,139.7723] },
+{ name:"Animate Ikebukuro", loc:[35.7289,139.7100] },
+{ name:"Sunshine City", loc:[35.7295,139.7190] }
+]
 },
 
 3:{
 date:"Jun 26",
 city:"Tokyo",
-coords:[[35.7148,139.7967],[35.7100,139.8107]],
-activities:["Asakusa (Senso-ji)", "Tokyo Skytree"],
-text:`
-Traditional Tokyo
-
-Morning:
-Asakusa
-– Senso-ji temple
-– Nakamise shopping street
-
-Afternoon:
-Tokyo Skytree
-– observation deck
-– Solamachi mall
-
-Snack ideas:
-melon pan / taiyaki
-`
+hotel:[35.6812,139.7671],
+text:"Traditional Tokyo and skyline views.",
+activities:[
+{ name:"Senso-ji Temple", loc:[35.7148,139.7967] },
+{ name:"Nakamise Street", loc:[35.7128,139.7967] },
+{ name:"Tokyo Skytree", loc:[35.7100,139.8107] },
+{ name:"Solamachi Mall", loc:[35.7105,139.8120] }
+]
 },
 
 4:{
 date:"Jun 27",
 city:"Tokyo",
-coords:[[35.6329,139.8804]],
-activities:["DisneySea"],
-text:`
-DisneySea (recommended)
-
-Arrive 30–45 min before opening.
-
-Top rides:
-– Journey to the Center of the Earth
-– Soaring
-– Tower of Terror
-
-Tips:
-Use Premier Access for big rides.
-Bring portable charger.
-`
+hotel:[35.6812,139.7671],
+text:"Full day at Tokyo DisneySea.",
+activities:[
+{ name:"Tokyo DisneySea", loc:[35.6267,139.8840] },
+{ name:"Journey to the Center of the Earth", loc:[35.6269,139.8830] },
+{ name:"Soaring Fantastic Flight", loc:[35.6274,139.8824] }
+]
 },
 
 5:{
 date:"Jun 28",
-city:"Fuji / Kawaguchiko",
-coords:[[35.3606,138.7274],[35.5170,138.8064]],
-activities:["Lake Kawaguchi", "Mt Fuji"],
-text:`
-Travel to Fuji area
-
-Tokyo → Kawaguchiko (~2 hours)
-
-Main ideas:
-– Lake Kawaguchi walk
-– Mt Fuji panorama ropeway
-– Oishi Park views
-
-Optional:
-– Fuji scenic viewpoints
-– Relaxing day
-
-Evening:
-Ryokan / hotel
-Rest early for Fuji-Q tomorrow
-`
+city:"Kawaguchiko",
+hotel:[35.4973,138.7546],
+text:"Travel to Mt Fuji area and explore Lake Kawaguchi.",
+activities:[
+{ name:"Lake Kawaguchi", loc:[35.5170,138.8064] },
+{ name:"Mt Fuji Panoramic Ropeway", loc:[35.5030,138.7700] },
+{ name:"Oishi Park", loc:[35.5175,138.7427] }
+]
 },
 
 6:{
 date:"Jun 29",
 city:"Fuji",
-coords:[[35.4875,138.7800]],
-activities:["Fuji-Q Highland"],
-text:`
-Fuji-Q Highland 🎢
-
-One of the best theme parks in Japan.
-
-Major rides:
-– Eejanaika
-– Takabisha
-– Fujiyama
-– Do-Dodonpa
-
-Tips:
-Arrive early.
-
-Mount Fuji views from the park if weather is clear.
-
-Spend most of the day here.
-`
+hotel:[35.4973,138.7546],
+text:"Thrill day at Fuji-Q Highland.",
+activities:[
+{ name:"Fuji-Q Highland", loc:[35.4875,138.7800] },
+{ name:"Eejanaika Roller Coaster", loc:[35.4881,138.7792] },
+{ name:"Takabisha Roller Coaster", loc:[35.4877,138.7812] },
+{ name:"Fujiyama Coaster", loc:[35.4865,138.7780] }
+]
 },
 
 7:{
 date:"Jun 30",
 city:"Kyoto",
-coords:[[35.0116,135.7681],[34.9671,135.7727]],
-activities:["Kyoto Station", "Fushimi Inari"],
-text:`
-Travel to Kyoto
-
-Morning:
-Shinkansen (~2h)
-
-Afternoon:
-Fushimi Inari shrine
-
-Walk through the famous torii gates.
-Going halfway up the mountain is perfect.
-
-Best time:
-Late afternoon / sunset
-`
+hotel:[34.9854,135.7587],
+text:"Travel to Kyoto and visit Fushimi Inari.",
+activities:[
+{ name:"Kyoto Station", loc:[34.9858,135.7588] },
+{ name:"Fushimi Inari Shrine", loc:[34.9671,135.7727] }
+]
 },
 
 8:{
 date:"Jul 1",
 city:"Kyoto",
-coords:[[35.0094,135.6668]],
-activities:["Arashiyama"],
-text:`
-Arashiyama
-
-Morning (go early):
-– Bamboo forest
-– Tenryu-ji temple
-
-Optional:
-Monkey park hike
-
-Afternoon:
-River walk
-`
+hotel:[34.9854,135.7587],
+text:"Arashiyama nature and temples.",
+activities:[
+{ name:"Arashiyama Bamboo Grove", loc:[35.0094,135.6668] },
+{ name:"Tenryu-ji Temple", loc:[35.0159,135.6731] },
+{ name:"Iwatayama Monkey Park", loc:[35.0150,135.6690] }
+]
 },
 
 9:{
 date:"Jul 2",
 city:"Osaka",
-coords:[[34.6654,135.4323]],
-activities:["Universal Studios Japan"],
-text:`
-Universal Studios Japan
-
-Main areas:
-– Super Nintendo World
-– Harry Potter
-
-Tips:
-Express Pass recommended.
-
-Check Nintendo entry times.
-`
+hotel:[34.6689,135.5013],
+text:"Universal Studios Japan.",
+activities:[
+{ name:"Universal Studios Japan", loc:[34.6654,135.4323] },
+{ name:"Super Nintendo World", loc:[34.6662,135.4325] },
+{ name:"Wizarding World of Harry Potter", loc:[34.6673,135.4300] }
+]
 },
 
 10:{
 date:"Jul 3",
 city:"Osaka",
-coords:[[34.6937,135.5023],[34.6687,135.5030]],
-activities:["Osaka Castle", "Dotonbori"],
-text:`
-Osaka food + city
-
-Morning:
-– Osaka Castle (optional)
-
-Afternoon:
-– Kuromon Market
-
-Night:
-Dotonbori
-– Takoyaki
-– Okonomiyaki
-– Glico sign photo
-`
+hotel:[34.6689,135.5013],
+text:"Explore Osaka culture and food.",
+activities:[
+{ name:"Osaka Castle", loc:[34.6873,135.5259] },
+{ name:"Kuromon Market", loc:[34.6665,135.5063] },
+{ name:"Dotonbori", loc:[34.6687,135.5030] }
+]
 },
 
 11:{
 date:"Jul 4",
 city:"Tokyo",
-coords:[[35.6702,139.7026]],
-activities:["Harajuku"],
-text:`
-Harajuku
-
-Morning:
-– Meiji Shrine forest walk
-
-After:
-– Takeshita street
-– Omotesando
-`
+hotel:[35.6895,139.6917],
+text:"Return to Tokyo and visit Harajuku.",
+activities:[
+{ name:"Meiji Shrine", loc:[35.6764,139.6993] },
+{ name:"Takeshita Street", loc:[35.6702,139.7026] },
+{ name:"Omotesando Avenue", loc:[35.6654,139.7123] }
+]
 },
 
 12:{
 date:"Jul 5",
 city:"Tokyo",
-coords:[[35.6272,139.7768]],
-activities:["Odaiba / TeamLab"],
-text:`
-Odaiba / TeamLab
-
-Must do:
-TeamLab Planets (book in advance)
-
-After:
-– DiverCity mall
-– Gundam statue
-`
+hotel:[35.6895,139.6917],
+text:"Explore Odaiba and digital art museums.",
+activities:[
+{ name:"TeamLab Planets", loc:[35.6491,139.7890] },
+{ name:"Gundam Statue DiverCity", loc:[35.6251,139.7757] },
+{ name:"Odaiba Seaside Park", loc:[35.6284,139.7750] }
+]
 },
 
 13:{
 date:"Jul 6",
 city:"Tokyo",
-coords:[[35.6895,139.6917]],
-activities:["Free Exploration"],
-text:`
-Free day
-
-Ideas:
-– Ginza luxury shopping
-– Shimokitazawa vintage area
-– Return to favorite places
-
-Last souvenir shopping.
-`
+hotel:[35.6895,139.6917],
+text:"Free exploration and shopping.",
+activities:[
+{ name:"Ginza Shopping District", loc:[35.6717,139.7650] },
+{ name:"Shimokitazawa", loc:[35.6617,139.6686] }
+]
 },
 
 14:{
 date:"Jul 7",
 city:"Tokyo",
-coords:[[35.5494,139.7798]],
-activities:["Haneda Airport"],
-text:`
-Departure day
-
-Leave hotel ~3 hours before flight.
-
-Airport snacks:
-Japanese KitKat flavors.
-`
+hotel:[35.6895,139.6917],
+text:"Departure day.",
+activities:[
+{ name:"Haneda Airport", loc:[35.5494,139.7798] }
+]
 }
 
 };
 
 
-function showDay(day){
-
-if(currentLayer){
-map.removeLayer(currentLayer);
-}
-
-const data=trip[day];
-
-let hotel;
-if (day <= 4) hotel = hotels.tokyo1;
-else if (day == 5) hotel = hotels.hakone;
-else if (day <= 8) hotel = hotels.kyoto;
-else if (day <= 10) hotel = hotels.osaka;
-else hotel = hotels.tokyo2;
-
-currentHotel = hotel;
-
-currentLayer=L.layerGroup();
-
-const poly=L.polyline(data.coords,{weight:4}).addTo(currentLayer);
-
-data.coords.forEach((c, index)=>{
-const activity = data.activities && data.activities[index] ? data.activities[index] : 'Attraction ' + (index + 1);
-L.marker(c).bindPopup('Day ' + day + ' - ' + activity).addTo(currentLayer);
+window.addEventListener('load', () => {
+  const last = localStorage.getItem('lastDay');
+  if (last) showDay(last, trip);
 });
 
-// Add hotel marker
-const hotelIcon = L.icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-  popupAnchor: [1, -34],
-  shadowSize: [41, 41]
+// Update inline handlers to pass `trip`
+document.querySelectorAll('#controls button').forEach(button => {
+  button.onclick = () => showDay(button.dataset.day, trip);
 });
-L.marker(hotel, {icon: hotelIcon}).bindPopup('Hotel').addTo(currentLayer);
-
-currentLayer.addTo(map);
-
-const bounds = currentLayer.getBounds();
-const center = bounds.getCenter();
-map.setView(center, 14);
-
-let html = "<b>"+data.date+" — "+data.city+"</b><pre>"+data.text+"</pre>";
-
-if (data.activities) {
-html += "<br><b>Activities:</b><ul>";
-data.activities.forEach(act => html += "<li>" + act + "</li>");
-html += "</ul>";
-}
-
-html += "<br><b>Locations:</b> " + data.coords.map(c => "[" + c.join(", ") + "]").join(" → ");
-
-document.getElementById("infoBox").innerHTML = html;
-
-document.getElementById("infoBox").scrollIntoView({behavior: "smooth"});
-
-document.querySelectorAll('#controls button').forEach(b=>b.classList.remove('active'));
-
-const btn=document.querySelector('#controls button[data-day="'+day+'"]');
-
-if(btn)btn.classList.add('active');
-
-localStorage.setItem('lastDay',day);
-}
-
-
-function returnToHotel(){
-  if(currentHotel){
-    map.setView(currentHotel, 15);
-  }
-}
-
-
-window.addEventListener('load',()=>{
-const last=localStorage.getItem('lastDay');
-if(last)showDay(last);
-});
-
 </script>
 
+
 </body>
+
 </html>
