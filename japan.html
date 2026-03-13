@@ -469,6 +469,8 @@ Japanese KitKat flavors.
 
 function showDay(day){
 
+alert("showDay called for day " + day);
+
 if(currentLayer){
 map.removeLayer(currentLayer);
 }
@@ -506,12 +508,16 @@ L.marker(hotel, {icon: hotelIcon}).bindPopup('Hotel').addTo(currentLayer);
 
 currentLayer.addTo(map);
 
-map.fitBounds(currentLayer.getBounds());
+const bounds = currentLayer.getBounds();
+const center = bounds.getCenter();
+map.setView(center, 14);
 
 document.getElementById("infoBox").innerHTML=
 "<b>"+data.date+" — "+data.city+"</b><pre>"+data.text+"</pre>" +
 (data.activities ? "<br><b>Activities:</b> " + data.activities.join(", ") : "") +
 "<br><b>Locations:</b> " + data.coords.map(c => "[" + c.join(", ") + "]").join(" → ");
+
+document.getElementById("infoBox").scrollIntoView({behavior: "smooth"});
 
 document.querySelectorAll('#controls button').forEach(b=>b.classList.remove('active'));
 
