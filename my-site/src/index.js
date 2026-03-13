@@ -5,12 +5,6 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ThemeProvider } from './ThemeContext'; // Import ThemeProvider
 
-// Handle GitHub Pages redirect for SPA routing
-const path = window.location.search;
-if (path.startsWith('?/')) {
-  window.history.replaceState(null, '', path.slice(1));
-}
-
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
 root.render(
