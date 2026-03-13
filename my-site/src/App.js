@@ -1,6 +1,6 @@
 // App.js
 import React from 'react';
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeContext'; // Just useTheme here
 import Home from './pages/Home';
 import Projects from './pages/Projects';
@@ -12,23 +12,26 @@ import './App.css';
 
 function App() {
   const { isDarkMode, toggleTheme } = useTheme();
+  const location = useLocation();
+  const isJapanPage = location.pathname === '/japan';
 
   return (
       <Router>
         <div className={`App ${isDarkMode ? 'dark-mode' : ''}`}>
-          <header className="App-header">
-            <h1>My Awesome Website</h1>
-            <button onClick={toggleTheme} className="dark-mode-toggle">
-              {isDarkMode ? '☀️' : '🌙'}
-            </button>
-            <nav>
-              <Link to="/">Home</Link>
-              <Link to="/projects">Projects</Link>
-              <Link to="/about">About</Link>
-              <Link to="/contact">Contact</Link>
-              <Link to="/japan">Japan</Link>
-            </nav>
-          </header>
+          {!isJapanPage && (
+            <header className="App-header">
+              <h1>My Awesome Website</h1>
+              <button onClick={toggleTheme} className="dark-mode-toggle">
+                {isDarkMode ? '☀️' : '🌙'}
+              </button>
+              <nav>
+                <Link to="/">Home</Link>
+                <Link to="/projects">Projects</Link>
+                <Link to="/about">About</Link>
+                <Link to="/contact">Contact</Link>
+              </nav>
+            </header>
+          )}
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -38,7 +41,7 @@ function App() {
               <Route path="/japan" element={<Japan />} />
             </Routes>
           </main>
-          <Footer />{/*@ ./Footter */}
+          {!isJapanPage && <Footer />}{/*@ ./Footter */}
         </div>
       </Router>
   );
