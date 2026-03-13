@@ -119,28 +119,28 @@ Japan Trip Planner
 <div id="controls">
 
 <div class="cityTitle">Tokyo (Arrival)</div>
-<button onclick="showDay(1)">Jun 24</button>
-<button onclick="showDay(2)">Jun 25</button>
-<button onclick="showDay(3)">Jun 26</button>
-<button onclick="showDay(4)">Jun 27</button>
+<button onclick="showDay(1)" data-day="1">Jun 24</button>
+<button onclick="showDay(2)" data-day="2">Jun 25</button>
+<button onclick="showDay(3)" data-day="3">Jun 26</button>
+<button onclick="showDay(4)" data-day="4">Jun 27</button>
 
 <div class="cityTitle">Fuji / Hakone</div>
-<button onclick="showDay(5)">Jun 28</button>
-<button onclick="showDay(6)">Jun 29</button>
+<button onclick="showDay(5)" data-day="5">Jun 28</button>
+<button onclick="showDay(6)" data-day="6">Jun 29</button>
 
 <div class="cityTitle">Kyoto</div>
-<button onclick="showDay(7)">Jun 30</button>
-<button onclick="showDay(8)">Jul 1</button>
+<button onclick="showDay(7)" data-day="7">Jun 30</button>
+<button onclick="showDay(8)" data-day="8">Jul 1</button>
 
 <div class="cityTitle">Osaka</div>
-<button onclick="showDay(9)">Jul 2</button>
-<button onclick="showDay(10)">Jul 3</button>
+<button onclick="showDay(9)" data-day="9">Jul 2</button>
+<button onclick="showDay(10)" data-day="10">Jul 3</button>
 
 <div class="cityTitle">Tokyo (Return)</div>
-<button onclick="showDay(11)">Jul 4</button>
-<button onclick="showDay(12)">Jul 5</button>
-<button onclick="showDay(13)">Jul 6</button>
-<button onclick="showDay(14)">Jul 7</button>
+<button onclick="showDay(11)" data-day="11">Jul 4</button>
+<button onclick="showDay(12)" data-day="12">Jul 5</button>
+<button onclick="showDay(13)" data-day="13">Jul 6</button>
+<button onclick="showDay(14)" data-day="14">Jul 7</button>
 
 </div>
 
@@ -154,7 +154,7 @@ Japan Trip Planner
 
 <script>
 
-var map = L.map('map', {zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false}).setView([35.5,137],6);
+var map = L.map('map', {scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false}).setView([35.5,137],6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution:'© OpenStreetMap'
@@ -515,7 +515,7 @@ document.getElementById("infoBox").innerHTML=
 
 document.querySelectorAll('#controls button').forEach(b=>b.classList.remove('active'));
 
-const btn=document.querySelector('#controls button[onclick="showDay('+day+')"]');
+const btn=document.querySelector('#controls button[data-day="'+day+'"]');
 
 if(btn)btn.classList.add('active');
 
