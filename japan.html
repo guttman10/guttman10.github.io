@@ -28,6 +28,16 @@ padding:20px;
 font-size:1.5rem;
 }
 
+#returnToHotelBtn{
+background:#e67e22;
+color:white;
+border:none;
+padding:4px 8px;
+margin-left:10px;
+cursor:pointer;
+border-radius:4px;
+}
+
 #map{
 height:75vh;
 max-width:1000px;
@@ -103,6 +113,7 @@ font-family:Roboto;
 <header>
 Japan Trip Planner
 <button onclick="downloadItinerary()" style="margin-left:15px;font-size:0.8em;padding:4px 8px;">Download</button>
+<button onclick="returnToHotel()" style="margin-left:10px;font-size:0.8em;padding:4px 8px;">Return to Hotel</button>
 </header>
 
 
@@ -151,6 +162,15 @@ attribution:'© OpenStreetMap'
 }).addTo(map);
 
 var currentLayer=null;
+var currentHotel=null;
+
+const hotels = {
+  tokyo1: [35.6895, 139.6917], // Tokyo Station
+  hakone: [35.2323, 139.1069], // Hakone
+  kyoto: [34.9854, 135.7587], // Kyoto Station
+  osaka: [34.7024, 135.4959], // Osaka Station
+  tokyo2: [35.6895, 139.6917] // Tokyo Station
+};
 
 
 const trip={
@@ -456,6 +476,15 @@ map.removeLayer(currentLayer);
 
 const data=trip[day];
 
+let hotel;
+if (day <= 4) hotel = hotels.tokyo1;
+else if (day == 5) hotel = hotels.hakone;
+else if (day <= 8) hotel = hotels.kyoto;
+else if (day <= 10) hotel = hotels.osaka;
+else hotel = hotels.tokyo2;
+
+currentHotel = hotel;
+
 currentLayer=L.layerGroup();
 
 const poly=L.polyline(data.coords,{weight:4}).addTo(currentLayer);
@@ -465,7 +494,7 @@ const activity = data.activities && data.activities[index] ? data.activities[ind
 L.marker(c).bindPopup('Day ' + day + ' - ' + activity).addTo(currentLayer);
 });
 
-// Add temporary hotel marker
+// Add hotel marker
 const hotelIcon = L.icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
@@ -474,7 +503,7 @@ const hotelIcon = L.icon({
   popupAnchor: [1, -34],
   shadowSize: [41, 41]
 });
-L.marker([35.6895, 139.6917], {icon: hotelIcon}).bindPopup('Hotel (Temporary)').addTo(currentLayer);
+L.marker(hotel, {icon: hotelIcon}).bindPopup('Hotel').addTo(currentLayer);
 
 currentLayer.addTo(map);
 
@@ -493,7 +522,11 @@ localStorage.setItem('lastDay',day);
 }
 
 
-function downloadItinerary(){
+function returnToHotel(){
+  if(currentHotel){
+    map.setView(currentHotel, 15);
+  }
+}
 
 let csv='Date,City,Details\n';
 
