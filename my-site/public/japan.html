@@ -144,7 +144,7 @@ Japan Trip Planner
 
 <script>
 
-var map = L.map('map').setView([35.5,137],6);
+var map = L.map('map', {zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false, boxZoom: false, keyboard: false}).setView([35.5,137],6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
 attribution:'© OpenStreetMap'
@@ -163,33 +163,40 @@ text:`
 Arrival day
 
 • Airport → hotel
+• Get Suica / PASMO
 • Light rest
 
-Evening:
-– Shibuya crossing
+Evening (easy first night):
+– Shibuya Crossing
 – Shibuya Sky sunset
-– Explore Center-gai
+– Walk Center-gai
 
-Food:
-ramen or sushi
+Food idea:
+Ramen or conveyor sushi
 `
 },
 
 2:{
 date:"Jun 25",
 city:"Tokyo",
-coords:[[35.6984,139.7730],[35.7138,139.7774]],
+coords:[[35.6984,139.7730],[35.7289,139.7100]],
 text:`
-Akihabara + Ueno
+Anime + Otaku day
 
 Morning:
-– Anime shops
+Akihabara
 – Arcades
-– Gachapon machines
+– Gachapon
+– Mandarake
+– Super Potato
 
 Afternoon:
-– Ueno Park
-– Shinobazu pond
+Ikebukuro
+– Animate (largest anime store)
+– Sunshine City
+
+Tip:
+Keep luggage light — lots of browsing
 `
 },
 
@@ -198,15 +205,20 @@ date:"Jun 26",
 city:"Tokyo",
 coords:[[35.7148,139.7967],[35.7100,139.8107]],
 text:`
-Asakusa + Skytree
+Traditional Tokyo
 
 Morning:
+Asakusa
 – Senso-ji temple
-– Nakamise street
+– Nakamise shopping street
 
 Afternoon:
-– Tokyo Skytree
+Tokyo Skytree
+– observation deck
 – Solamachi mall
+
+Snack ideas:
+melon pan / taiyaki
 `
 },
 
@@ -215,58 +227,87 @@ date:"Jun 27",
 city:"Tokyo",
 coords:[[35.6329,139.8804]],
 text:`
-DisneySea / Disneyland
+DisneySea (recommended)
 
-Arrive before opening
+Arrive 30–45 min before opening.
 
 Top rides:
-– Beauty and the Beast
-– Pooh ride
+– Journey to the Center of the Earth
+– Soaring
+– Tower of Terror
+
+Tips:
+Use Premier Access for big rides.
+Bring portable charger.
 `
 },
 
 5:{
 date:"Jun 28",
-city:"Fuji / Hakone",
-coords:[[35.2323,139.1069]],
+city:"Fuji / Kawaguchiko",
+coords:[[35.3606,138.7274],[35.5170,138.8064]],
 text:`
-Travel to Hakone
+Travel to Fuji area
 
-Hakone loop:
-– Ropeway
-– Pirate ship
-– Owakudani black eggs
+Tokyo → Kawaguchiko (~2 hours)
+
+Main ideas:
+– Lake Kawaguchi walk
+– Mt Fuji panorama ropeway
+– Oishi Park views
+
+Optional:
+– Fuji scenic viewpoints
+– Relaxing day
 
 Evening:
-– Ryokan
-– Onsen
+Ryokan / hotel
+Rest early for Fuji-Q tomorrow
 `
 },
 
 6:{
 date:"Jun 29",
 city:"Fuji",
-coords:[[35.3606,138.7274]],
+coords:[[35.4875,138.7800]],
 text:`
-Lake Kawaguchi
+Fuji-Q Highland 🎢
 
-Best Fuji views
+One of the best theme parks in Japan.
 
-Ideas:
-– cable car
-– lakeside walk
+Major rides:
+– Eejanaika
+– Takabisha
+– Fujiyama
+– Do-Dodonpa
+
+Tips:
+Arrive early.
+
+Mount Fuji views from the park if weather is clear.
+
+Spend most of the day here.
 `
 },
 
 7:{
 date:"Jun 30",
 city:"Kyoto",
-coords:[[35.0116,135.7681]],
+coords:[[35.0116,135.7681],[34.9671,135.7727]],
 text:`
-Shinkansen to Kyoto
+Travel to Kyoto
+
+Morning:
+Shinkansen (~2h)
 
 Afternoon:
-Fushimi Inari shrine hike
+Fushimi Inari shrine
+
+Walk through the famous torii gates.
+Going halfway up the mountain is perfect.
+
+Best time:
+Late afternoon / sunset
 `
 },
 
@@ -277,9 +318,15 @@ coords:[[35.0094,135.6668]],
 text:`
 Arashiyama
 
+Morning (go early):
 – Bamboo forest
-– Tenryu-ji
-– monkey park
+– Tenryu-ji temple
+
+Optional:
+Monkey park hike
+
+Afternoon:
+River walk
 `
 },
 
@@ -290,21 +337,35 @@ coords:[[34.6654,135.4323]],
 text:`
 Universal Studios Japan
 
-Must areas:
-– Nintendo World
+Main areas:
+– Super Nintendo World
 – Harry Potter
+
+Tips:
+Express Pass recommended.
+
+Check Nintendo entry times.
 `
 },
 
 10:{
 date:"Jul 3",
 city:"Osaka",
-coords:[[34.6937,135.5023]],
+coords:[[34.6937,135.5023],[34.6687,135.5030]],
 text:`
-Osaka city
+Osaka food + city
 
-– Kuromon market
-– Dotonbori night food
+Morning:
+– Osaka Castle (optional)
+
+Afternoon:
+– Kuromon Market
+
+Night:
+Dotonbori
+– Takoyaki
+– Okonomiyaki
+– Glico sign photo
 `
 },
 
@@ -315,8 +376,12 @@ coords:[[35.6702,139.7026]],
 text:`
 Harajuku
 
-– Meiji Shrine
+Morning:
+– Meiji Shrine forest walk
+
+After:
 – Takeshita street
+– Omotesando
 `
 },
 
@@ -325,10 +390,14 @@ date:"Jul 5",
 city:"Tokyo",
 coords:[[35.6272,139.7768]],
 text:`
-Odaiba
+Odaiba / TeamLab
 
-– TeamLab
-– DiverCity
+Must do:
+TeamLab Planets (book in advance)
+
+After:
+– DiverCity mall
+– Gundam statue
 `
 },
 
@@ -337,12 +406,14 @@ date:"Jul 6",
 city:"Tokyo",
 coords:[[35.6895,139.6917]],
 text:`
-Free exploration
+Free day
 
 Ideas:
-– Ginza
-– Shimokitazawa
-– shopping
+– Ginza luxury shopping
+– Shimokitazawa vintage area
+– Return to favorite places
+
+Last souvenir shopping.
 `
 },
 
@@ -353,7 +424,10 @@ coords:[[35.5494,139.7798]],
 text:`
 Departure day
 
-Go to airport 3h before flight
+Leave hotel ~3 hours before flight.
+
+Airport snacks:
+Japanese KitKat flavors.
 `
 }
 
@@ -372,9 +446,12 @@ currentLayer=L.layerGroup();
 
 const poly=L.polyline(data.coords,{weight:4}).addTo(currentLayer);
 
-data.coords.forEach(c=>{
-L.marker(c).addTo(currentLayer);
+data.coords.forEach((c, index)=>{
+L.marker(c).bindPopup('Day ' + day + ' - Attraction ' + (index + 1)).addTo(currentLayer);
 });
+
+// Add temporary hotel marker
+L.marker([35.6895, 139.6917]).bindPopup('Hotel (Temporary)').addTo(currentLayer);
 
 currentLayer.addTo(map);
 
