@@ -6,6 +6,7 @@ import Home from './pages/Home';
 import Projects from './pages/Projects';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Japan from './pages/Japan';
 import Footer from './Footer'; // Import Footer component
 import './App.css';
 
@@ -25,6 +26,7 @@ function App() {
               <Link to="/projects">Projects</Link>
               <Link to="/about">About</Link>
               <Link to="/contact">Contact</Link>
+              <Link to="/japan">Japan</Link>
             </nav>
           </header>
           <main>
@@ -33,6 +35,7 @@ function App() {
               <Route path="/projects" element={<Projects />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/japan" element={<Japan />} />
             </Routes>
           </main>
           <Footer />{/*@ ./Footter */}
