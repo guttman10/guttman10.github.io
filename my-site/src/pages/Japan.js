@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { useTheme } from '../ThemeContext';
 
 // Fix for default markers in react-leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -333,6 +334,7 @@ const MapComponent = ({ selectedDay }) => {
 
 const Japan = () => {
   const [selectedDay, setSelectedDay] = useState(null);
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     const lastDay = localStorage.getItem('lastDay');
@@ -362,63 +364,65 @@ const Japan = () => {
   const data = selectedDay ? trip[selectedDay] : null;
 
   return (
-    <div style={{ fontFamily: "'Roboto', Arial, sans-serif", background: '#f0f2f5', color: '#333', margin: 0, padding: 0, minHeight: '100vh' }}>
-      <header style={{ background: '#34495e', color: '#ecf0f1', textAlign: 'center', padding: '20px 0', fontSize: '1.5rem', fontWeight: 500, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-        Japan 14 Day Trip <button onClick={downloadItinerary} style={{ fontSize: '0.8em', padding: '4px 8px', marginLeft: '20px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: '#e67e22', color: 'white' }}>Download Itinerary</button>
+    <div style={{ fontFamily: "'Roboto', Arial, sans-serif", backgroundColor: isDarkMode ? '#1f1f1f' : '#f0f2f5', color: isDarkMode ? '#ffffff' : '#333', margin: 0, padding: 0, minHeight: '100vh', paddingTop: '20px' }}>
+      <header style={{ backgroundColor: isDarkMode ? '#1f1f1f' : 'white', color: isDarkMode ? '#ffffff' : '#333', textAlign: 'center', padding: '20px 0', fontSize: '1.5rem', fontWeight: 500, boxShadow: isDarkMode ? '0 2px 4px rgba(255,255,255,0.1)' : '0 2px 4px rgba(0,0,0,0.1)', marginBottom: '20px' }}>
+        Japan 14 Day Trip <button onClick={downloadItinerary} style={{ fontSize: '0.8em', padding: '4px 8px', marginLeft: '20px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: isDarkMode ? '#61dafb' : '#e67e22', color: isDarkMode ? '#1f1f1f' : 'white' }}>Download Itinerary</button>
       </header>
 
-      <div id="controls" style={{ padding: '15px', background: '#2c3e50', color: '#ecf0f1', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px', borderRadius: '8px', maxWidth: '1000px', margin: '20px auto 0' }}>
-        <div className="cityTitle" style={{ flexBasis: '100%', marginTop: '10px', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase' }}>Tokyo (arrival)</div>
-        {[1,2,3,4].map(day => (
-          <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? '#c0392b' : '#e67e22', color: 'white', transition: 'background 0.3s' }}>
-            Day {day}
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 20px' }}>
+        <div id="controls" style={{ backgroundColor: isDarkMode ? '#2c3e50' : '#2c3e50', color: '#ecf0f1', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))', gap: '10px', padding: '15px', borderRadius: '8px', maxWidth: '1000px', width: '100%', marginBottom: '20px' }}>
+          <div style={{ gridColumn: '1 / -1', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', marginBottom: '10px' }}>Tokyo (arrival)</div>
+          {[1,2,3,4].map(day => (
+            <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? (isDarkMode ? '#a0e7ff' : '#c0392b') : (isDarkMode ? '#61dafb' : '#e67e22'), color: selectedDay === day ? (isDarkMode ? '#1f1f1f' : 'white') : 'white', transition: 'background 0.3s' }}>
+              Day {day}
+            </button>
+          ))}
+
+          <div style={{ gridColumn: '1 / -1', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', margin: '10px 0' }}>Hakone</div>
+          <button onClick={() => showDay(5)} className={selectedDay === 5 ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === 5 ? (isDarkMode ? '#a0e7ff' : '#c0392b') : (isDarkMode ? '#61dafb' : '#e67e22'), color: selectedDay === 5 ? (isDarkMode ? '#1f1f1f' : 'white') : 'white', transition: 'background 0.3s' }}>
+            Day 5
           </button>
-        ))}
 
-        <div className="cityTitle" style={{ flexBasis: '100%', marginTop: '10px', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase' }}>Hakone</div>
-        <button onClick={() => showDay(5)} className={selectedDay === 5 ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === 5 ? '#c0392b' : '#e67e22', color: 'white', transition: 'background 0.3s' }}>
-          Day 5
-        </button>
+          <div style={{ gridColumn: '1 / -1', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', margin: '10px 0' }}>Kyoto</div>
+          {[6,7,8].map(day => (
+            <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? (isDarkMode ? '#a0e7ff' : '#c0392b') : (isDarkMode ? '#61dafb' : '#e67e22'), color: selectedDay === day ? (isDarkMode ? '#1f1f1f' : 'white') : 'white', transition: 'background 0.3s' }}>
+              Day {day}
+            </button>
+          ))}
 
-        <div className="cityTitle" style={{ flexBasis: '100%', marginTop: '10px', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase' }}>Kyoto</div>
-        {[6,7,8].map(day => (
-          <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? '#c0392b' : '#e67e22', color: 'white', transition: 'background 0.3s' }}>
-            Day {day}
-          </button>
-        ))}
+          <div style={{ gridColumn: '1 / -1', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', margin: '10px 0' }}>Osaka</div>
+          {[9,10].map(day => (
+            <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? (isDarkMode ? '#a0e7ff' : '#c0392b') : (isDarkMode ? '#61dafb' : '#e67e22'), color: selectedDay === day ? (isDarkMode ? '#1f1f1f' : 'white') : 'white', transition: 'background 0.3s' }}>
+              Day {day}
+            </button>
+          ))}
 
-        <div className="cityTitle" style={{ flexBasis: '100%', marginTop: '10px', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase' }}>Osaka</div>
-        {[9,10].map(day => (
-          <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? '#c0392b' : '#e67e22', color: 'white', transition: 'background 0.3s' }}>
-            Day {day}
-          </button>
-        ))}
+          <div style={{ gridColumn: '1 / -1', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', margin: '10px 0' }}>Tokyo (return)</div>
+          {[11,12,13,14].map(day => (
+            <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? (isDarkMode ? '#a0e7ff' : '#c0392b') : (isDarkMode ? '#61dafb' : '#e67e22'), color: selectedDay === day ? (isDarkMode ? '#1f1f1f' : 'white') : 'white', transition: 'background 0.3s' }}>
+              Day {day}
+            </button>
+          ))}
+        </div>
 
-        <div className="cityTitle" style={{ flexBasis: '100%', marginTop: '10px', fontWeight: 700, fontSize: '1.1em', letterSpacing: '1px', textTransform: 'uppercase' }}>Tokyo (return)</div>
-        {[11,12,13,14].map(day => (
-          <button key={day} onClick={() => showDay(day)} className={selectedDay === day ? 'active' : ''} style={{ margin: '4px', padding: '8px 14px', cursor: 'pointer', border: 'none', borderRadius: '4px', background: selectedDay === day ? '#c0392b' : '#e67e22', color: 'white', transition: 'background 0.3s' }}>
-            Day {day}
-          </button>
-        ))}
-      </div>
+        <MapContainer center={[35.5, 137]} zoom={6} style={{ height: '60vh', boxShadow: isDarkMode ? '0 2px 8px rgba(255,255,255,0.1)' : '0 2px 8px rgba(0,0,0,0.15)', borderRadius: '8px', width: '100%', maxWidth: '1000px', marginBottom: '20px' }}>
+          <TileLayer
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='© OpenStreetMap'
+          />
+          <MapComponent selectedDay={selectedDay} />
+        </MapContainer>
 
-      <MapContainer center={[35.5, 137]} zoom={6} style={{ height: '75vh', boxShadow: '0 2px 8px rgba(0,0,0,0.15)', borderRadius: '8px', margin: '20px auto', maxWidth: '1000px' }}>
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='© OpenStreetMap'
-        />
-        <MapComponent selectedDay={selectedDay} />
-      </MapContainer>
-
-      <div id="infoBox" style={{ padding: '25px', background: 'white', maxWidth: '1000px', margin: '20px auto 40px', borderRadius: '8px', boxShadow: '0 2px 8px rgba(0,0,0,0.1)', minHeight: '120px', lineHeight: '1.8', fontSize: '0.95em' }}>
-        {data ? (
-          <>
-            <b>Day {selectedDay} - {data.city}</b>
-            <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: "'Roboto', Arial, sans-serif", lineHeight: '1.7', color: '#444', margin: '0' }}>{data.text}</pre>
-          </>
-        ) : (
-          <b>Select a day to see details.</b>
-        )}
+        <div id="infoBox" style={{ padding: '25px', backgroundColor: isDarkMode ? '#2c3e50' : 'white', maxWidth: '1000px', width: '100%', marginBottom: '40px', borderRadius: '8px', boxShadow: isDarkMode ? '0 2px 8px rgba(255,255,255,0.1)' : '0 2px 8px rgba(0,0,0,0.1)', minHeight: '120px', lineHeight: '1.8', fontSize: '0.95em', color: isDarkMode ? '#ecf0f1' : '#333' }}>
+          {data ? (
+            <>
+              <b style={{ display: 'block', textAlign: 'center', fontSize: '1.3em', marginBottom: '20px', paddingBottom: '15px', borderBottom: `2px solid ${isDarkMode ? '#61dafb' : '#e67e22'}`, color: isDarkMode ? '#61dafb' : '#2c3e50' }}>Day {selectedDay} - {data.city}</b>
+              <pre style={{ whiteSpace: 'pre-wrap', wordWrap: 'break-word', fontFamily: "'Roboto', Arial, sans-serif", lineHeight: '1.7', color: isDarkMode ? '#ecf0f1' : '#444', margin: '0' }}>{data.text}</pre>
+            </>
+          ) : (
+            <b style={{ display: 'block', textAlign: 'center', fontSize: '1.3em', color: isDarkMode ? '#61dafb' : '#2c3e50' }}>Select a day to see details.</b>
+          )}
+        </div>
       </div>
     </div>
   );
