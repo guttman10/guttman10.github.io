@@ -507,7 +507,7 @@ L.marker(hotel, {icon: hotelIcon}).bindPopup('Hotel').addTo(currentLayer);
 
 currentLayer.addTo(map);
 
-map.fitBounds(poly.getBounds());
+map.fitBounds(currentLayer.getBounds());
 
 document.getElementById("infoBox").innerHTML=
 "<b>"+data.date+" — "+data.city+"</b><pre>"+data.text+"</pre>";
