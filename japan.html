@@ -4,530 +4,416 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Japan 14 Day Trip</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-<link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
-
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
 <style>
-/* Import a clean, modern font */
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
 
-html, body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  font-family: 'Roboto', Arial, sans-serif;
-  background: #f0f2f5;
-  color: #333;
+html,body{
+margin:0;
+padding:0;
+font-family:Roboto,Arial;
+background:#f0f2f5;
+color:#333;
 }
 
-header {
-  background: #34495e;
-  color: #ecf0f1;
-  text-align: center;
-  padding: 20px 0;
-  font-size: 1.5rem;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+header{
+background:#34495e;
+color:white;
+text-align:center;
+padding:20px;
+font-size:1.5rem;
 }
 
-#map {
-  height: 75vh;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  border-radius: 8px;
-  margin: 20px auto;
-  max-width: 1000px;
+#map{
+height:75vh;
+max-width:1000px;
+margin:20px auto;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.2);
 }
 
-#controls {
-  padding: 15px;
-  background: #2c3e50;
-  color: #ecf0f1;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  border-radius: 8px;
-  max-width: 1000px;
-  margin: 20px auto 0;
+#controls{
+max-width:1000px;
+margin:20px auto;
+background:#2c3e50;
+padding:15px;
+border-radius:8px;
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+color:white;
 }
 
-#controls .cityTitle {
-  flex-basis: 100%;
-  margin-top: 10px;
-  font-weight: 700;
-  font-size: 1.1em;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+.cityTitle{
+flex-basis:100%;
+font-weight:bold;
+margin-top:10px;
+letter-spacing:1px;
 }
 
-button {
-  margin: 4px;
-  padding: 8px 14px;
-  cursor: pointer;
-  border: none;
-  border-radius: 4px;
-  background: #e67e22;
-  color: white;
-  transition: background 0.3s;
+button{
+border:none;
+padding:8px 14px;
+border-radius:4px;
+background:#e67e22;
+color:white;
+cursor:pointer;
 }
 
-button:hover {
-  background: #d35400;
+button:hover{
+background:#d35400;
 }
 
-button.active {
-  background: #c0392b;
+button.active{
+background:#c0392b;
 }
 
-
-#infoBox {
-  padding: 25px;
-  background: white;
-  max-width: 1000px;
-  margin: 20px auto 40px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  min-height: 120px;
-  line-height: 1.8;
-  font-size: 0.95em;
+#infoBox{
+max-width:1000px;
+margin:20px auto 40px;
+background:white;
+padding:25px;
+border-radius:8px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+line-height:1.7;
 }
 
-#infoBox b {
-  display: block;
-  text-align: center;
-  font-size: 1.3em;
-  margin-bottom: 20px;
-  padding-bottom: 15px;
-  border-bottom: 2px solid #e67e22;
-  color: #2c3e50;
+#infoBox b{
+display:block;
+text-align:center;
+font-size:1.3em;
+margin-bottom:15px;
 }
 
-#infoBox pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  font-family: 'Roboto', Arial, sans-serif;
-  line-height: 1.7;
-  color: #444;
-  margin: 0;
+#infoBox pre{
+white-space:pre-wrap;
+font-family:Roboto;
 }
 
-.cityTitle {
-  font-weight:bold;
-  margin-top:10px;
-}
 </style>
 </head>
 
 <body>
 
-<header>Japan 14 Day Trip  <button id="downloadBtn" onclick="downloadItinerary()" style="font-size:0.8em;padding:4px 8px; margin-left:20px; cursor:pointer;">Download Itinerary</button></header>
+<header>
+Japan Trip Planner
+<button onclick="downloadItinerary()" style="margin-left:15px;font-size:0.8em;padding:4px 8px;">Download</button>
+</header>
 
 
 <div id="controls">
-  <!-- day buttons grouped by city for clarity -->
-  <div class="cityTitle">Tokyo (arrival)</div>
-  <button onclick="showDay(1)">Day 1</button>
-  <button onclick="showDay(2)">Day 2</button>
-  <button onclick="showDay(3)">Day 3</button>
-  <button onclick="showDay(4)">Day 4</button>
 
-  <div class="cityTitle">Hakone</div>
-  <button onclick="showDay(5)">Day 5</button>
+<div class="cityTitle">Tokyo (Arrival)</div>
+<button onclick="showDay(1)">Jun 24</button>
+<button onclick="showDay(2)">Jun 25</button>
+<button onclick="showDay(3)">Jun 26</button>
+<button onclick="showDay(4)">Jun 27</button>
 
-  <div class="cityTitle">Kyoto</div>
-  <button onclick="showDay(6)">Day 6</button>
-  <button onclick="showDay(7)">Day 7</button>
-  <button onclick="showDay(8)">Day 8</button>
+<div class="cityTitle">Fuji / Hakone</div>
+<button onclick="showDay(5)">Jun 28</button>
+<button onclick="showDay(6)">Jun 29</button>
 
-  <div class="cityTitle">Osaka</div>
-  <button onclick="showDay(9)">Day 9</button>
-  <button onclick="showDay(10)">Day 10</button>
+<div class="cityTitle">Kyoto</div>
+<button onclick="showDay(7)">Jun 30</button>
+<button onclick="showDay(8)">Jul 1</button>
 
-  <div class="cityTitle">Tokyo (return)</div>
-  <button onclick="showDay(11)">Day 11</button>
-  <button onclick="showDay(12)">Day 12</button>
-  <button onclick="showDay(13)">Day 13</button>
-  <button onclick="showDay(14)">Day 14</button>
+<div class="cityTitle">Osaka</div>
+<button onclick="showDay(9)">Jul 2</button>
+<button onclick="showDay(10)">Jul 3</button>
+
+<div class="cityTitle">Tokyo (Return)</div>
+<button onclick="showDay(11)">Jul 4</button>
+<button onclick="showDay(12)">Jul 5</button>
+<button onclick="showDay(13)">Jul 6</button>
+<button onclick="showDay(14)">Jul 7</button>
+
 </div>
+
 
 <div id="map"></div>
+
 <div id="infoBox">
-  <b>Select a day to see details.</b>
+<b>Select a date</b>
 </div>
+
 
 <script>
 
-// ---------- MAP INIT ----------
 var map = L.map('map').setView([35.5,137],6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-  attribution:'© OpenStreetMap'
+attribution:'© OpenStreetMap'
 }).addTo(map);
 
-var currentLayer = null;
+var currentLayer=null;
 
-// ---------- TRIP DATA ----------
-const trip = {
+
+const trip={
 
 1:{
+date:"Jun 24",
 city:"Tokyo",
 coords:[[35.6762,139.6503],[35.6595,139.7005]],
 text:`
-Arrival Day – Shibuya Introduction
+Arrival day
 
-• Airport → Hotel (Narita ~60–75 min, Haneda ~30–45 min).
-• Check-in, shower, short rest.
-• Head to Shibuya before sunset.
+• Airport → hotel
+• Light rest
 
-What to do:
-– Walk Shibuya Crossing (best from Starbucks 2F view).
-– Visit Shibuya Sky (book sunset slot in advance).
-– Explore Center-gai street.
-– Dinner suggestion: ramen or conveyor sushi nearby.
+Evening:
+– Shibuya crossing
+– Shibuya Sky sunset
+– Explore Center-gai
 
-Tips:
-✔ Don’t overplan — jet lag day.
-✔ Get Suica/PASMO immediately.
-✔ Convenience stores are your friend tonight.
+Food:
+ramen or sushi
 `
 },
 
 2:{
+date:"Jun 25",
 city:"Tokyo",
 coords:[[35.6984,139.7730],[35.7138,139.7774]],
 text:`
 Akihabara + Ueno
 
-Morning (less crowded):
-– Start in Akihabara.
-– Anime shops (Mandarake, Super Potato).
-– Gachapon machines.
-– Arcades (Taito Station).
+Morning:
+– Anime shops
+– Arcades
+– Gachapon machines
 
 Afternoon:
-– Walk to Ueno Park.
-– Relax near Shinobazu Pond.
-– Optional: Tokyo National Museum.
-
-Food tip:
-Try gyudon or tonkatsu nearby.
-
-Transport:
-Use Yamanote Line (~10 min between areas).
-
-✔ Bring passport for tax-free shopping.
-✔ Keep luggage light – lots of browsing.
+– Ueno Park
+– Shinobazu pond
 `
 },
 
 3:{
+date:"Jun 26",
 city:"Tokyo",
 coords:[[35.7148,139.7967],[35.7100,139.8107]],
 text:`
 Asakusa + Skytree
 
 Morning:
-– Senso-ji Temple (arrive before 9am).
-– Nakamise shopping street.
-– Try fresh melon pan or taiyaki.
+– Senso-ji temple
+– Nakamise street
 
 Afternoon:
-– Walk or short train to Tokyo Skytree.
-– Reserve tower ticket in advance.
-– Solamachi mall for shopping.
-
-Photo tip:
-Temple is best early morning.
-Skytree best near sunset.
-
-✔ Respect temple etiquette (no loud talking).
+– Tokyo Skytree
+– Solamachi mall
 `
 },
 
 4:{
+date:"Jun 27",
 city:"Tokyo",
-coords:[[35.6762,139.6503],[35.6329,139.8804]],
+coords:[[35.6329,139.8804]],
 text:`
-Tokyo Disneyland
+DisneySea / Disneyland
 
-Full Day (8–10h)
+Arrive before opening
 
-Strategy:
-– Arrive 30–45 min before opening.
-– Use Premier Access for top rides.
-– Ride popular attractions early.
-
-Must-try:
+Top rides:
 – Beauty and the Beast
-– Pooh’s Hunny Hunt
-
-Food:
-Grab popcorn buckets early (they sell out).
-
-✔ Comfortable shoes.
-✔ Bring portable charger.
+– Pooh ride
 `
 },
 
 5:{
-city:"Hakone",
-coords:[[35.6762,139.6503],[35.2323,139.1069]],
+date:"Jun 28",
+city:"Fuji / Hakone",
+coords:[[35.2323,139.1069]],
 text:`
-Hakone + Onsen Night
+Travel to Hakone
 
-Morning:
-– Romancecar to Hakone.
-– Purchase Hakone Free Pass.
-
-Hakone Loop:
+Hakone loop:
 – Ropeway
-– Pirate Ship Lake Ashi
+– Pirate ship
 – Owakudani black eggs
 
-If weather clear:
-Great Mt. Fuji views.
-
 Evening:
-– Ryokan check-in.
-– Onsen before dinner.
-– Kaiseki dinner experience.
-
-✔ Tattoo policy check for onsen.
-✔ Relax day — not rush day.
+– Ryokan
+– Onsen
 `
 },
 
 6:{
-city:"Kyoto",
-coords:[[35.0116,135.7681],[34.9671,135.7727]],
+date:"Jun 29",
+city:"Fuji",
+coords:[[35.3606,138.7274]],
 text:`
-Travel to Kyoto + Fushimi Inari
+Lake Kawaguchi
 
-Morning:
-– Shinkansen to Kyoto (~2h).
-– Drop luggage at hotel.
+Best Fuji views
 
-Afternoon:
-– Fushimi Inari hike (2–3h).
-– Go up halfway for best balance.
-
-Best time:
-Late afternoon for softer light.
-
-✔ Wear good shoes (many stairs).
-✔ Bring water.
+Ideas:
+– cable car
+– lakeside walk
 `
 },
 
 7:{
+date:"Jun 30",
 city:"Kyoto",
-coords:[[35.0116,135.7681],[35.0094,135.6668]],
+coords:[[35.0116,135.7681]],
 text:`
-Arashiyama Day
+Shinkansen to Kyoto
 
-Morning:
-– Bamboo Forest (before 8:30am).
-– Tenryu-ji Garden.
-– River walk.
-
-Optional:
-Monkey Park (30–45 min hike).
-
-Lunch:
-Try tofu specialty (Kyoto famous).
-
-✔ Go early – extremely crowded after 10am.
+Afternoon:
+Fushimi Inari shrine hike
 `
 },
 
 8:{
+date:"Jul 1",
 city:"Kyoto",
-coords:[[35.0116,135.7681],[35.0394,135.7292],[35.0037,135.7788]],
+coords:[[35.0094,135.6668]],
 text:`
-Golden Pavilion + Gion
+Arashiyama
 
-Morning:
-– Kinkaku-ji (arrive early).
-– Short visit (~1h).
-
-Afternoon:
-– Nishiki Market snacks.
-– Walk Gion district.
-– Yasaka Shrine at sunset.
-
-Evening:
-Possible geisha sighting in Gion.
-
-✔ Keep quiet in traditional streets.
+– Bamboo forest
+– Tenryu-ji
+– monkey park
 `
 },
 
 9:{
+date:"Jul 2",
 city:"Osaka",
-coords:[[34.6937,135.5023],[34.6654,135.4323]],
+coords:[[34.6654,135.4323]],
 text:`
 Universal Studios Japan
 
-Arrive before opening.
-Express Pass highly recommended.
-
 Must areas:
-– Super Nintendo World
+– Nintendo World
 – Harry Potter
-
-Plan:
-Ride high demand attractions first.
-
-✔ Check entry times for Nintendo area.
-✔ Bring snacks (allowed small items).
 `
 },
 
 10:{
+date:"Jul 3",
 city:"Osaka",
-coords:[[34.6937,135.5023],[34.6687,135.5030]],
+coords:[[34.6937,135.5023]],
 text:`
-Osaka City + Dotonbori
+Osaka city
 
-Morning:
-– Optional Osaka Castle.
-– Kuromon Market.
-
-Evening:
-– Dotonbori neon lights.
-– Try takoyaki + okonomiyaki.
-– Glico running man photo.
-
-✔ Best atmosphere after dark.
+– Kuromon market
+– Dotonbori night food
 `
 },
 
 11:{
+date:"Jul 4",
 city:"Tokyo",
-coords:[[35.6762,139.6503],[35.6702,139.7026]],
+coords:[[35.6702,139.7026]],
 text:`
-Harajuku + Meiji Shrine
+Harajuku
 
-Morning:
-– Meiji Shrine (peaceful forest walk).
-– Then Takeshita Street.
-
-Afternoon:
-– Omotesando shopping.
-– Cat street cafes.
-
-✔ Sunday best for street fashion.
+– Meiji Shrine
+– Takeshita street
 `
 },
 
 12:{
+date:"Jul 5",
 city:"Tokyo",
-coords:[[35.6762,139.6503],[35.6272,139.7768]],
+coords:[[35.6272,139.7768]],
 text:`
-Odaiba Waterfront
+Odaiba
 
-– TeamLab (book in advance if included).
-– Rainbow Bridge views.
-– DiverCity shopping.
-
-Great sunset location.
-
-✔ Good half-relaxed day.
+– TeamLab
+– DiverCity
 `
 },
 
 13:{
+date:"Jul 6",
 city:"Tokyo",
-coords:[[35.6762,139.6503]],
+coords:[[35.6895,139.6917]],
 text:`
-Free Exploration Day
+Free exploration
 
 Ideas:
-– Return to favorite area.
-– Ginza luxury shopping.
-– Shimokitazawa vintage stores.
-– Last tax-free shopping.
-
-✔ Pack luggage in evening.
+– Ginza
+– Shimokitazawa
+– shopping
 `
 },
 
 14:{
+date:"Jul 7",
 city:"Tokyo",
-coords:[[35.6762,139.6503],[35.5494,139.7798]],
+coords:[[35.5494,139.7798]],
 text:`
-Departure Day
+Departure day
 
-– Leave 3h before international flight.
-– Train to Haneda ~30–45 min.
-
-Last tip:
-Buy airport snacks + KitKat flavors.
-
-✔ Check passport & documents night before.
+Go to airport 3h before flight
 `
 }
 
 };
 
-// ---------- SHOW DAY ----------
+
 function showDay(day){
 
-  if(currentLayer){
-    map.removeLayer(currentLayer);
-  }
+if(currentLayer){
+map.removeLayer(currentLayer);
+}
 
-  const data = trip[day];
+const data=trip[day];
 
-  currentLayer = L.layerGroup();
+currentLayer=L.layerGroup();
 
-  const poly = L.polyline(data.coords,{weight:4}).addTo(currentLayer);
+const poly=L.polyline(data.coords,{weight:4}).addTo(currentLayer);
 
-  data.coords.forEach(c=>{
-    L.marker(c).addTo(currentLayer);
-  });
+data.coords.forEach(c=>{
+L.marker(c).addTo(currentLayer);
+});
 
-  currentLayer.addTo(map);
+currentLayer.addTo(map);
 
-  map.fitBounds(poly.getBounds());
+map.fitBounds(poly.getBounds());
 
-  document.getElementById("infoBox").innerHTML =
-    "<b>Day "+day+" - "+data.city+"</b><pre>"+data.text+"</pre>";
+document.getElementById("infoBox").innerHTML=
+"<b>"+data.date+" — "+data.city+"</b><pre>"+data.text+"</pre>";
 
-  // highlight active button
-  document.querySelectorAll('#controls button').forEach(b=>b.classList.remove('active'));
-  const btn = document.querySelector('#controls button[onclick="showDay('+day+')"]');
-  if(btn) btn.classList.add('active');
+document.querySelectorAll('#controls button').forEach(b=>b.classList.remove('active'));
 
-  // remember last selected day
-  localStorage.setItem('lastDay', day);
+const btn=document.querySelector('#controls button[onclick="showDay('+day+')"]');
+
+if(btn)btn.classList.add('active');
+
+localStorage.setItem('lastDay',day);
 }
 
 
-// download itinerary text as simple CSV
 function downloadItinerary(){
-  let csv = 'Day,City,Details\n';
-  Object.keys(trip).forEach(d=>{
-    const entry = trip[d];
-    csv += d+','+entry.city+','+entry.text.replace(/,/g,'')+'\n';
-  });
-  const blob = new Blob([csv], {type:'text/csv'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'itinerary.csv';
-  a.click();
+
+let csv='Date,City,Details\n';
+
+Object.values(trip).forEach(d=>{
+csv+=d.date+','+d.city+','+d.text.replace(/,/g,'')+'\n';
+});
+
+const blob=new Blob([csv],{type:'text/csv'});
+const a=document.createElement('a');
+
+a.href=URL.createObjectURL(blob);
+a.download='japan_itinerary.csv';
+
+a.click();
 }
 
-// on load restore last day
-window.addEventListener('load', ()=>{
-  const last = localStorage.getItem('lastDay');
-  if(last) showDay(last);
+
+window.addEventListener('load',()=>{
+const last=localStorage.getItem('lastDay');
+if(last)showDay(last);
 });
 
 </script>
