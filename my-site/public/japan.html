@@ -159,6 +159,7 @@ const trip={
 date:"Jun 24",
 city:"Tokyo",
 coords:[[35.6762,139.6503],[35.6595,139.7005]],
+activities:["Shibuya Crossing", "Shibuya Sky"],
 text:`
 Arrival day
 
@@ -180,6 +181,7 @@ Ramen or conveyor sushi
 date:"Jun 25",
 city:"Tokyo",
 coords:[[35.6984,139.7730],[35.7289,139.7100]],
+activities:["Akihabara", "Ikebukuro"],
 text:`
 Anime + Otaku day
 
@@ -204,6 +206,7 @@ Keep luggage light — lots of browsing
 date:"Jun 26",
 city:"Tokyo",
 coords:[[35.7148,139.7967],[35.7100,139.8107]],
+activities:["Asakusa (Senso-ji)", "Tokyo Skytree"],
 text:`
 Traditional Tokyo
 
@@ -226,6 +229,7 @@ melon pan / taiyaki
 date:"Jun 27",
 city:"Tokyo",
 coords:[[35.6329,139.8804]],
+activities:["DisneySea"],
 text:`
 DisneySea (recommended)
 
@@ -246,6 +250,7 @@ Bring portable charger.
 date:"Jun 28",
 city:"Fuji / Kawaguchiko",
 coords:[[35.3606,138.7274],[35.5170,138.8064]],
+activities:["Lake Kawaguchi", "Mt Fuji"],
 text:`
 Travel to Fuji area
 
@@ -270,6 +275,7 @@ Rest early for Fuji-Q tomorrow
 date:"Jun 29",
 city:"Fuji",
 coords:[[35.4875,138.7800]],
+activities:["Fuji-Q Highland"],
 text:`
 Fuji-Q Highland 🎢
 
@@ -294,6 +300,7 @@ Spend most of the day here.
 date:"Jun 30",
 city:"Kyoto",
 coords:[[35.0116,135.7681],[34.9671,135.7727]],
+activities:["Kyoto Station", "Fushimi Inari"],
 text:`
 Travel to Kyoto
 
@@ -315,6 +322,7 @@ Late afternoon / sunset
 date:"Jul 1",
 city:"Kyoto",
 coords:[[35.0094,135.6668]],
+activities:["Arashiyama"],
 text:`
 Arashiyama
 
@@ -334,6 +342,7 @@ River walk
 date:"Jul 2",
 city:"Osaka",
 coords:[[34.6654,135.4323]],
+activities:["Universal Studios Japan"],
 text:`
 Universal Studios Japan
 
@@ -352,6 +361,7 @@ Check Nintendo entry times.
 date:"Jul 3",
 city:"Osaka",
 coords:[[34.6937,135.5023],[34.6687,135.5030]],
+activities:["Osaka Castle", "Dotonbori"],
 text:`
 Osaka food + city
 
@@ -373,6 +383,7 @@ Dotonbori
 date:"Jul 4",
 city:"Tokyo",
 coords:[[35.6702,139.7026]],
+activities:["Harajuku"],
 text:`
 Harajuku
 
@@ -389,6 +400,7 @@ After:
 date:"Jul 5",
 city:"Tokyo",
 coords:[[35.6272,139.7768]],
+activities:["Odaiba / TeamLab"],
 text:`
 Odaiba / TeamLab
 
@@ -405,6 +417,7 @@ After:
 date:"Jul 6",
 city:"Tokyo",
 coords:[[35.6895,139.6917]],
+activities:["Free Exploration"],
 text:`
 Free day
 
@@ -421,6 +434,7 @@ Last souvenir shopping.
 date:"Jul 7",
 city:"Tokyo",
 coords:[[35.5494,139.7798]],
+activities:["Haneda Airport"],
 text:`
 Departure day
 
@@ -447,11 +461,20 @@ currentLayer=L.layerGroup();
 const poly=L.polyline(data.coords,{weight:4}).addTo(currentLayer);
 
 data.coords.forEach((c, index)=>{
-L.marker(c).bindPopup('Day ' + day + ' - Attraction ' + (index + 1)).addTo(currentLayer);
+const activity = data.activities && data.activities[index] ? data.activities[index] : 'Attraction ' + (index + 1);
+L.marker(c).bindPopup('Day ' + day + ' - ' + activity).addTo(currentLayer);
 });
 
 // Add temporary hotel marker
-L.marker([35.6895, 139.6917]).bindPopup('Hotel (Temporary)').addTo(currentLayer);
+const hotelIcon = L.icon({
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41]
+});
+L.marker([35.6895, 139.6917], {icon: hotelIcon}).bindPopup('Hotel (Temporary)').addTo(currentLayer);
 
 currentLayer.addTo(map);
 
