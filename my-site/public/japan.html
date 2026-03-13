@@ -529,21 +529,6 @@ function returnToHotel(){
   }
 }
 
-let csv='Date,City,Details\n';
-
-Object.values(trip).forEach(d=>{
-csv+=d.date+','+d.city+','+d.text.replace(/,/g,'')+'\n';
-});
-
-const blob=new Blob([csv],{type:'text/csv'});
-const a=document.createElement('a');
-
-a.href=URL.createObjectURL(blob);
-a.download='japan_itinerary.csv';
-
-a.click();
-}
-
 
 window.addEventListener('load',()=>{
 const last=localStorage.getItem('lastDay');
